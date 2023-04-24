@@ -27,8 +27,13 @@ def walk(vertex, edges):
         e = adj[0]
         edges.remove(e)
         path.append(e[1])
+
+        print(f"V: {vertex}, Path: {path}")
+
         vertex = e[1]
         adj = outgoing(vertex, edges)
+
+    print('')
     return path, edges
 
 
