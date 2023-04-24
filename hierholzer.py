@@ -23,7 +23,7 @@ def walk(vertex, edges):
     If the graph is Eulerian, *path* is a cycle."""
     path = [vertex]
     adj = outgoing(vertex, edges)
-    while adj:
+    while adj:        
         e = adj[0]
         edges.remove(e)
         path.append(e[1])
@@ -36,9 +36,11 @@ def hierholzer(vertices, edges):
     """Finds an Eulerian cycle in a connected Eulerian graph defined
     by the set *vertices* of its vertices and the set *edges* of its edges.
     The cycle is returned as a list of vertices."""
+
     err = "Your graph is either not Eulerian, or connected, or cyclic."
     assert all([(len(outgoing(v, edges))+len(incoming(v, edges))) %
                2 == 0 for v in vertices]), err
+    
     v = vertices[0]
     cycle, edges = walk(v, edges)
     assert cycle[0] == cycle[-1], err
@@ -51,11 +53,24 @@ def hierholzer(vertices, edges):
             assert sub[0] == sub[-1], err
             cycle = cycle[:i]+sub[:-1]+cycle[i:]
             notvisited.update(sub)
+
     return cycle
 
 
 if __name__ == "__main__":
-    V = [1, 2, 3, 4, 5, 6]
-    E = [(1, 2), (2, 3), (3, 4), (4, 5), (5, 6),
-         (6, 1), (2, 6), (6, 4), (4, 2)]
+    V = ["a", "b", "c", "d", "e", "f", "g", "h"]
+    E = [
+        ("a", "b"),
+        ("b", "d"),
+        ("d", "f"),
+        ("f", "g"),
+        ("g", "c"),
+        ("c", "b"),
+        ("b", "f"),
+        ("f", "h"),
+        ("h", "g"),
+        ("g", "e"),
+        ("e", "c"),
+        ("c", "a"),
+    ]
     print(hierholzer(V, E))
