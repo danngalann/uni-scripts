@@ -60,6 +60,10 @@ if __name__=='__main__':
     addEdge(adj, 10, 5)
     addEdge(adj, 10, 7)
     addEdge(adj, 10, 9)
+    addEdge(adj, 1, 4)
+    addEdge(adj, 1, 8)
+    addEdge(adj, 4, 11)
+    addEdge(adj, 8, 11)
 
     # Marcar el nodo de origen como visitado
     visited[1] = True
