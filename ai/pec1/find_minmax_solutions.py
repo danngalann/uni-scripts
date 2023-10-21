@@ -2,9 +2,9 @@ import random
 
 def generate_unique_values():
     # We set -100 as the lower bound for computation purposes
-    x = random.randint(-18, -5)  # -18 <= x <= -5
-    y = random.randint(-100, -18)  # y <= -18
-    z = random.randint(-100, 4)  # z < 5
+    x = random.randint(-100, -19)  # x < -18
+    y = random.randint(-17, 100)   # y > -18
+    z = random.randint(-100, 5)    # z <= 5
 
     # If any two values are the same, call the function recursively
     if x == y or y == z or x == z:
