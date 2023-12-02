@@ -20,7 +20,7 @@ def find_solutions(N):
     return solutions
 
 # Number of solutions you want to generate
-N = 10  # for example, change to your preference
+N = 10
 
 solutions = find_solutions(N)
 for i, solution in enumerate(solutions, 1):
