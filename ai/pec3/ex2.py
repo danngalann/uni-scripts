@@ -45,13 +45,19 @@ for i, (varA_term, varB_term, condition, outB1_term) in rules_outB1.items():
     elif condition == 'OR':
         rule_degree = t_conorm(varA_degree, varB_degree)
     elif condition == 'NOT_A':
-        rule_degree = 1 - varA_degree
+        not_varA_degree = yager_complement(varA_degree)
+        rule_degree = not_varA_degree
     elif condition == 'NOT_B':
-        rule_degree = 1 - varB_degree
+        not_varB_degree = yager_complement(varB_degree)
+        rule_degree = not_varB_degree
     elif condition == 'NOT_BOTH_OR':
-        rule_degree = t_conorm(1 - varA_degree, 1 - varB_degree)
+        not_varA_degree = yager_complement(varA_degree)
+        not_varB_degree = yager_complement(varB_degree)
+        rule_degree = t_conorm(not_varA_degree, not_varB_degree)
     elif condition == 'NOT_BOTH_AND':
-        rule_degree = t_norm(1 - varA_degree, 1 - varB_degree)
+        not_varA_degree = yager_complement(varA_degree)
+        not_varB_degree = yager_complement(varB_degree)
+        rule_degree = t_norm(not_varA_degree, not_varB_degree)
 
     rule_outputs_outB1[i] = rule_degree
     rule_status = "activada" if rule_degree > 0 else "no activada"
