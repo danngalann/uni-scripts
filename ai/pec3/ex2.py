@@ -24,11 +24,11 @@ varB_H = membership_level(varB_value, 4, 8, 8, 9)
 
 rules_outB1 = {
     1: ('L', 'L', 'OR', 'VL'),
-    2: ('L', None, 'NOT_B', 'H'),
+    2: (None, 'L', 'NOT_B', 'H'),
     3: ('M', 'L', 'AND', 'VH'),
     4: ('M', 'M', 'AND', 'M'),
     5: ('M', 'H', 'AND', 'VH'),
-    6: (None, 'H', 'NOT_A', 'L'),
+    6: ('H', None, 'NOT_A', 'L'),
     7: ('VH', 'H', 'NOT_BOTH_OR', 'L'),
     8: ('H', 'H', 'OR', 'VH'),
     9: ('VH', 'H', 'OR', 'VH')
