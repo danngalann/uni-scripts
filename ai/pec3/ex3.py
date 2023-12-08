@@ -10,6 +10,14 @@ def membership_level(x, a, b, c, d):
 def yager_complement(a, w=1):
     return (1 - a**w)**(1/w)
 
+def get_degree(var_term):
+    if var_term.startswith('NOT_'):
+        negated_term = var_term[4:]  # Extract the term after 'NOT_'
+        var_degree = globals().get(f'var{negated_term}', 0)
+        return yager_complement(var_degree)
+    else:
+        return globals().get(f'var{var_term}', 0)
+
 varC_value = 1.1
 varD_value = 1.25
 
@@ -51,20 +59,6 @@ for i, (varC_term, varD_term, condition, outB2_term) in rules_outB2.items():
         rule_degree = t_norm(varC_degree, varD_degree)
     elif condition == 'OR':
         rule_degree = t_conorm(varC_degree, varD_degree)
-    elif condition == 'NOT_A':
-        not_varC_degree = yager_complement(varC_degree)
-        rule_degree = not_varC_degree
-    elif condition == 'NOT_B':
-        not_varD_degree = yager_complement(varD_degree)
-        rule_degree = not_varD_degree
-    elif condition == 'NOT_BOTH_OR':
-        not_varC_degree = yager_complement(varC_degree)
-        not_varD_degree = yager_complement(varD_degree)
-        rule_degree = t_conorm(not_varC_degree, not_varD_degree)
-    elif condition == 'NOT_BOTH_AND':
-        not_varC_degree = yager_complement(varC_degree)
-        not_varD_degree = yager_complement(varD_degree)
-        rule_degree = t_norm(not_varC_degree, not_varD_degree)
 
     rule_outputs_outB2[i] = rule_degree
     rule_status = "activada" if rule_degree > 0 else "no activada"

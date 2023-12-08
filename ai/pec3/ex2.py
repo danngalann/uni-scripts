@@ -10,6 +10,14 @@ def membership_level(x, a, b, c, d):
 def yager_complement(a, w=1):
     return (1 - a**w)**(1/w)
 
+def get_degree(var_term):
+    if var_term.startswith('NOT_'):
+        negated_term = var_term[4:]  # Extract the term after 'NOT_'
+        var_degree = globals().get(f'var{negated_term}', 0)
+        return yager_complement(var_degree)
+    else:
+        return globals().get(f'var{var_term}', 0)
+
 varA_value = 6
 varB_value = 5
 
@@ -24,12 +32,12 @@ varB_H = membership_level(varB_value, 4, 8, 8, 9)
 
 rules_outB1 = {
     1: ('L', 'L', 'OR', 'VL'),
-    2: (None, 'L', 'NOT_B', 'H'),
+    2: (None, 'NOT_L', 'AND', 'H'),
     3: ('M', 'L', 'AND', 'VH'),
     4: ('M', 'M', 'AND', 'M'),
     5: ('M', 'H', 'AND', 'VH'),
-    6: ('H', None, 'NOT_A', 'L'),
-    7: ('VH', 'H', 'NOT_BOTH_OR', 'L'),
+    6: ('NOT_H', None, 'AND', 'L'),
+    7: ('NOT_VH', 'NOT_H', 'OR', 'L'),
     8: ('H', 'H', 'OR', 'VH'),
     9: ('VH', 'H', 'OR', 'VH')
 }
@@ -44,20 +52,6 @@ for i, (varA_term, varB_term, condition, outB1_term) in rules_outB1.items():
         rule_degree = t_norm(varA_degree, varB_degree)
     elif condition == 'OR':
         rule_degree = t_conorm(varA_degree, varB_degree)
-    elif condition == 'NOT_A':
-        not_varA_degree = yager_complement(varA_degree)
-        rule_degree = not_varA_degree
-    elif condition == 'NOT_B':
-        not_varB_degree = yager_complement(varB_degree)
-        rule_degree = not_varB_degree
-    elif condition == 'NOT_BOTH_OR':
-        not_varA_degree = yager_complement(varA_degree)
-        not_varB_degree = yager_complement(varB_degree)
-        rule_degree = t_conorm(not_varA_degree, not_varB_degree)
-    elif condition == 'NOT_BOTH_AND':
-        not_varA_degree = yager_complement(varA_degree)
-        not_varB_degree = yager_complement(varB_degree)
-        rule_degree = t_norm(not_varA_degree, not_varB_degree)
 
     rule_outputs_outB1[i] = rule_degree
     rule_status = "activada" if rule_degree > 0 else "no activada"
