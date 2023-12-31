@@ -1,4 +1,5 @@
-from sklearn.tree import DecisionTreeClassifier, export_text
+from sklearn.tree import DecisionTreeClassifier, export_text, export_graphviz
+from graphviz import Source
 import pandas as pd
 
 # Crear el conjunto de datos
@@ -24,3 +25,9 @@ decision_tree.fit(X, y)
 # Exportar el árbol en formato de texto
 tree_rules = export_text(decision_tree, feature_names=list(X.columns))
 print(tree_rules)
+
+# Guardar el árbol en formato PNG
+tree = Source(export_graphviz(decision_tree, feature_names=list(X.columns), class_names=['N', 'Y'], filled=True, out_file=None))
+png_bytes = tree.pipe(format='png')
+with open('tree.png','wb') as f:
+    f.write(png_bytes)
